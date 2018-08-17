@@ -1,0 +1,12 @@
+
+*.hex
+*.o
+*.bin
+*.elf
+*.map
+*.xml
+
+history
+
+*.pbxproj
+*.cogui

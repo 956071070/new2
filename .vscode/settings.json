@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "uart.h": "c",
+        "port.h": "c",
+        "stm32f10x.h": "c",
+        "deca_regs.h": "c",
+        "deca_device_api.h": "c",
+        "sleep.h": "c",
+        "deca_types.h": "c"
+    }
+}
