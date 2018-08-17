@@ -97,9 +97,9 @@
     <File name="Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_adc.c" path="../../Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_adc.c" type="1"/>
     <File name="Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_can.h" path="../../Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_can.h" type="1"/>
     <File name="platform/timer.c" path="../../platform/timer.c" type="1"/>
-    <File name="platform/stm32f10x_it.h" path="../../platform/stm32f10x_it.h" type="1"/>
     <File name="Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c" path="../../Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c" type="1"/>
     <File name="Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_exti.h" path="../../Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_exti.h" type="1"/>
+    <File name="platform/stm32f10x_it.h" path="../../platform/stm32f10x_it.h" type="1"/>
     <File name="decadriver/deca_param_types.h" path="../../decadriver/deca_param_types.h" type="1"/>
     <File name="platform/uart.h" path="../../platform/uart.h" type="1"/>
     <File name="platform/deca_mutex.c" path="../../platform/deca_mutex.c" type="1"/>
@@ -145,9 +145,9 @@
     <File name="Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.c" path="../../Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.c" type="1"/>
     <File name="platform/deca_spi.c" path="../../platform/deca_spi.c" type="1"/>
     <File name="decadriver/deca_version.h" path="../../decadriver/deca_version.h" type="1"/>
-    <File name="platform/port.c" path="../../platform/port.c" type="1"/>
     <File name="Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_bkp.c" path="../../Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_bkp.c" type="1"/>
     <File name="decadriver/deca_regs.h" path="../../decadriver/deca_regs.h" type="1"/>
+    <File name="platform/port.c" path="../../platform/port.c" type="1"/>
     <File name="Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c" path="../../Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c" type="1"/>
     <File name="Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_tim.c" path="../../Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_tim.c" type="1"/>
     <File name="Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_i2c.h" path="../../Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_i2c.h" type="1"/>

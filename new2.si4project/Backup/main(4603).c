@@ -26,7 +26,6 @@
 #define APP_NAME                "SIMPLE TX v1.2"
 #define TX_BUFFER_SIZE		    100
 #define EUID                    0x01        // 设备独立 ID， 不可更改
-define  FRAME_LEN_MAX			127 
 
 /* Default communication configuration. We use here EVK1000's default mode (mode 3). */
  dwt_config_t config = {
@@ -510,10 +509,10 @@ int main(void)
     {
         DW1000_DEBUG(TIP_DEBUG, ("> CONTROLLER MODE.\n"));
         ringBuffer_CLS(&usart4_ring_buffer);
-		
+
         // dwt_setrxtimeout(0);
         // dwt_forcetrxoff();
-			
+
         RUN_MODE                 = CONTROLER_MODE;
         instance.mode            = INS_MODE_NONE;
         global_instruction_frame = FRAME_INSTRUCTION_NONE;
@@ -614,7 +613,7 @@ int main(void)
                         /* turn on the receiver after sending is complete.  */
                         // dwt_setrxtimeout(0);
                         // dwt_setrxaftertxdelay(0);
-						
+
                         if(tmp_id.changed == 1)
                         {
                             if(various_tmp == 1)
@@ -833,7 +832,7 @@ int main(void)
                         {
                             frameIdx = 0;
                             tx_buff[frameIdx++] = FRAME_TYPE;
-                            tx_buff[frameIdx++] = FRAME_DATA; // only add this type 
+                            tx_buff[frameIdx++] = FRAME_DATA;
                             tx_buff[frameIdx++] = global_id.euid;  // recorder euid
                             tx_buff[frameIdx++] = tmp_id.panid;    // player panid
                             tx_buff[frameIdx++] = tmp_id.devid;    // player devid
@@ -961,71 +960,6 @@ static void rx_ok_cb(const dwt_cb_data_t *rx_data)
 	int i = 0;
     uint8 rxd_event = 0;
 
-	/*************add start *********/
-
-	/* Activate reception immediately. See NOTE 4 below. */
-    dwt_rxenable(DWT_START_RX_IMMEDIATE);
-
-    /* Poll until a frame is properly received or an error occurs. See NOTE 5 below.
-     * STATUS register is 5 bytes long but, as the events we are looking at are in the lower bytes of the register, we can use this simplest API
-     * function to access it. */
-    while (!((status_reg = dwt_read32bitreg(SYS_STATUS_ID)) & (SYS_STATUS_RXFCG | SYS_STATUS_ALL_RX_ERR)))
-    { };
-
-    if (status_reg & SYS_STATUS_RXFCG)
-    {
-        /* A frame has been received, read it into the local buffer. */
-        frame_len = dwt_read32bitreg(RX_FINFO_ID) & RX_FINFO_RXFL_MASK_1023;
-        if (frame_len <= FRAME_LEN_MAX)
-        {
-            dwt_readrxdata(tx_buff, frame_len, 0);
-        }
-		
-        /* TESTING BREAKPOINT LOCATION #1 */
-
-        /* Clear good RX frame event in the DW1000 status register. */
-        dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_RXFCG);
-
-		/******* i have stop here ********/
-	
-        /* Validate the frame is the one expected as sent by "TX then wait for a response" example. */
-        if ((frame_len == 14) && (rx_buffer[0] == 0xC5) && (rx_buffer[10] == 0x43) && (rx_buffer[11] == 0x2))
-        {
-            int i;
-
-            /* Copy source address of blink in response destination address. */
-            for (i = 0; i < 8; i++)
-            {
-                tx_msg[DATA_FRAME_DEST_IDX + i] = rx_buffer[BLINK_FRAME_SRC_IDX + i];
-            }
-
-            /* Write response frame data to DW1000 and prepare transmission. See NOTE 6 below.*/
-            dwt_writetxdata(sizeof(tx_msg), tx_msg, 0); /* Zero offset in TX buffer. */
-            dwt_writetxfctrl(sizeof(tx_msg), 0, 0); /* Zero offset in TX buffer, no ranging. */
-
-            /* Send the response. */
-            dwt_starttx(DWT_START_TX_IMMEDIATE);
-
-            /* Poll DW1000 until TX frame sent event set. */
-            while (!(dwt_read32bitreg(SYS_STATUS_ID) & SYS_STATUS_TXFRS))
-            { };
-
-            /* Clear TX frame sent event. */
-            dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_TXFRS);
-
-            /* Increment the data frame sequence number (modulo 256). */
-            tx_msg[DATA_FRAME_SN_IDX]++;
-        }
-    }
-    else
-    {
-        /* Clear RX error events in the DW1000 status register. */
-        dwt_write32bitreg(SYS_STATUS_ID, SYS_STATUS_ALL_RX_ERR);
-    }
-
-	/************add end*****************/
-	
-
     dwt_rxenable(DWT_START_RX_IMMEDIATE | DWT_NO_SYNC_PTRS);
 
     event_data_t dw_event;
@@ -1088,8 +1022,7 @@ static void rx_ok_cb(const dwt_cb_data_t *rx_data)
 
             case FRAME_INSTRUCTION:
             {
-            	
-				switch(RUN_MODE)
+                switch(RUN_MODE)
                 {
                     case CONTROLER_MODE:
                     {
@@ -1296,11 +1229,8 @@ static void rx_ok_cb(const dwt_cb_data_t *rx_data)
             }
             break;
 
-			// must not verify , must judge will only do this below
             case FRAME_DATA:
             {
-
-					
                 // uart_printf("receive a data frame.\n euid:%X, panid:%X, devid:%X\n",
                 //                 dw_event.frame[2], dw_event.frame[3], dw_event.frame[4]);
                 // if(   (dw_event.frame[2] != DEVICE_PANID)
